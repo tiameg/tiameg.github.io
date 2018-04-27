@@ -13,6 +13,54 @@
   <title>Tiameg</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!--线条效果-->
+  <style>
+    *,:after,:before {
+      box-sizing: border-box
+    }
+    body{
+      font-family: "Open Sans", Helvetica, Tahoma, Arial, "Microsoft YaHei", 微软雅黑, STXihei, 华文细黑, SimSun, 宋体, Heiti, 黑体, sans-serif;
+      font-size: 18px;
+      color: rgb(34, 34, 34);
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      width: 100%;
+      margin: 200px auto 0 auto;
+      text-align: center
+    }
+    .inner{
+      height:50px;
+      text-align: left;
+      display:inline-block;
+      padding: 0 14px;
+      *display:inline;
+      *zoom:1;
+    }
+    .svg-bg{
+      position: absolute;
+    }
+  </style>
+
+  <!--鼠标效果-->
+  <style type="text/css">
+    canvas{
+      border: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 100%;
+      text-align: left;
+      vertical-align: baseline;
+      background-image: none;
+      background-position: 0 0;
+      width: auto;
+      float: none;
+      overflow: visible;
+      text-indent: 0
+    }
+  </style>
 </head>
 
 <body>
@@ -25,43 +73,40 @@
     </div>
   </main>
 
-  <script>
-    var cs=document.getElementById('custom-svg');
-    var cp=document.getElementById('custom-polyline');
-    var w=window.innerWidth;
-    var arr=[0];
-
-    function creatPolyline(n){
-      var i=0, k=0, point=null;
-      while(k<n-2){
-        arr.push(~~(Math.random()*w));
-        k++;
-      }
-      arr.sort((a, b)=> a - b);
-      arr.push(w);
-      while(i<n){
-        point=cs.createSVGPoint();
-        point.x=arr[i];
-        point.y=~~(Math.random()*60);
-        cp.points.appendItem(point);
-        i++;
-      }
-
-    }
-    window.onresize = function(event) {
-      cp.points.clear();
-      arr=[0];
-      w=window.innerWidth;
-      creatPolyline(20);
-    };
-    creatPolyline(20);
-  </script>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/tiameg/tiameg.github.io/tarball/master" class="tar">tar</a><a href="https://github.com/tiameg/tiameg.github.io/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
 </body>
+
+<script src="./javascripts/mouse/test.js"></script>
+
+<script>
+  var cs=document.getElementById('custom-svg');
+  var cp=document.getElementById('custom-polyline');
+  var w=window.innerWidth;
+  var arr=[0];
+
+  function creatPolyline(n){
+    var i=0, k=0, point=null;
+    while(k<n-2){
+      arr.push(~~(Math.random()*w));
+      k++;
+    }
+    arr.sort((a, b)=> a - b);
+    arr.push(w);
+    while(i<n){
+      point=cs.createSVGPoint();
+      point.x=arr[i];
+      point.y=~~(Math.random()*60);
+      cp.points.appendItem(point);
+      i++;
+    }
+
+  }
+  window.onresize = function(event) {
+    cp.points.clear();
+    arr=[0];
+    w=window.innerWidth;
+    creatPolyline(20);
+  };
+  creatPolyline(20);
+
+</script>
 </html>
