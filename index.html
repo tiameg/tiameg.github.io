@@ -73,6 +73,24 @@
       当你徘徊在你想得到跟已经得到之间时 有很大可能你将会都失去
     </div>
   </main>
+
+  <!--动画人物JS-->
+  <!--<script src="./live2dw/L2Dwidget.min.js"></script>-->
+  <script src="./libs/live2dw/L2Dwidget.min.js"></script>
+  <script>
+    L2Dwidget.init({
+      "pluginRootPath": "live2dw/",
+      "pluginJsPath": "lib/",
+      "pluginModelPath": "assets/",
+      "tagMode": true,
+      "debug": "fasle",
+      "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "https://raw.githubusercontent.com/HouJinlong/houjinlong.github.io/master/live2dw/assets/assets/haru01.model.json"},
+      "display": {"superSample": 2, "width": 100, "height": 200, "position": "left", "vOffset": 0, "hOffset": 25},
+      "mobile": {"show": true, "scale": 0.3, "motion": true},
+      "react": {"opacityDefault": 0.7, "opacityOnHover": 0.2},
+      "log": false
+    });
+  </script>
 </body>
 <!--鼠标效果JS-->
 <script src="./javascripts/mouse/test.js"></script>
@@ -266,21 +284,4 @@
   }
 </script>
 
-<!--动画人物JS-->
-<!--<script src="./live2dw/L2Dwidget.min.js"></script>-->
-<script src="./libs/live2dw/L2Dwidget.min.js"></script>
-<script>
-  L2Dwidget.init({
-    "pluginRootPath": "live2dw/",
-    "pluginJsPath": "lib/",
-    "pluginModelPath": "assets/",
-    "tagMode": true,
-    "debug": "fasle",
-    "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "https://raw.githubusercontent.com/HouJinlong/houjinlong.github.io/master/live2dw/assets/assets/haru01.model.json"},
-    "display": {"superSample": 2, "width": 100, "height": 200, "position": "left", "vOffset": 0, "hOffset": 25},
-    "mobile": {"show": true, "scale": 0.3, "motion": true},
-    "react": {"opacityDefault": 0.7, "opacityOnHover": 0.2},
-    "log": false
-  });
-</script>
 </html>
