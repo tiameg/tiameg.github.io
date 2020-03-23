@@ -73,7 +73,7 @@
   </style>
 </head>
 
-<body>
+<body style="overflow-y: hidden;overflow-x: auto;">
   <svg id="custom-svg" class="svg-bg" height="60" width="100%">
     <polyline id="custom-polyline" style="fill:none;stroke:rgb(34, 34, 34);stroke-width:.5" points=""></polyline>
   </svg>
@@ -83,9 +83,12 @@
     </div>
   </main>
 
-  <!--<a style="position: absolute;top:0;width: 100%;text-align: center;" href="./live2dw/live2dw.html">
+  <a style="position: absolute;top:0;width: 100%;text-align: center;" href="./live2dw/live2dw.html">
     live2dw
-  </a>-->
+  </a>
+  <a style="position: absolute;top:30px;width: 100%;text-align: center;" href="./bm/index.html">
+    黑夜
+  </a>
   <!--动画人物-->
   <script src="./live2dw/live2dw/lib/L2Dwidget.min.js"></script>
   <script>
@@ -95,7 +98,7 @@
       "pluginModelPath": "assets/",
       "tagMode": true,
       "debug": "fasle",
-      "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "https://raw.githubusercontent.com/HouJinlong/houjinlong.github.io/master/live2dw/assets/assets/haru01.model.json"},
+      "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "https://github.com/tiameg/tiameg.github.io/tree/master/live2dw/live2dw/assets/assets/haru01.model.json"},
       "display": {"superSample": 2, "width": 100, "height": 200, "position": "left", "vOffset": 0, "hOffset": 25},
       "mobile": {"show": true, "scale": 0.3, "motion": true},
       "react": {"opacityDefault": 0.7, "opacityOnHover": 0.2},
