@@ -1,0 +1,658 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="./libs/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+  <title>Tiameg</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!--线条效果css-->
+  <style>
+    *,:after,:before {
+      box-sizing: border-box
+    }
+    body{
+      font-family: "Open Sans", Helvetica, Tahoma, Arial, "Microsoft YaHei", 微软雅黑, STXihei, 华文细黑, SimSun, 宋体, Heiti, 黑体, sans-serif;
+      font-size: 18px;
+      color: rgb(34, 34, 34);
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      width: 100%;
+      margin: 200px auto 0 auto;
+      text-align: center
+    }
+    .inner{
+      height:50px;
+      text-align: left;
+      display:inline-block;
+      padding: 0 14px;
+      *display:inline;
+      *zoom:1;
+    }
+    .svg-bg{
+      position: absolute;
+    }
+  </style>
+
+  <!--鼠标效果css-->
+<style type="text/css">
+    body>canvas{
+      width: 100%!important;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 100%;
+      text-align: left;
+      vertical-align: baseline;
+      background-image: none;
+      background-position: 0 0;
+      width: auto;
+      float: none;
+      overflow: visible;
+      text-indent: 0
+    }
+
+    #live2d-widget canvas {
+      position: fixed;
+      opacity: 0.7;
+      left: 25px;
+      bottom: 0px;
+      z-index: 99999;
+      pointer-events: none;
+    }
+
+    #confetti-canvas {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 99999;
+        pointer-events: none;
+    }
+</style>
+
+<!-- 猫 -->
+<style type="">
+  :root{
+      --bgColor:rgb(81, 136, 168);
+      --eyeHideTop:0px;
+      --cloudLeft:45%;
+      --mouthRadius:10px 10px 0 0;
+  }
+
+  #cat-app{
+    margin-top: 300px;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-image: repeating-linear-gradient(0deg, hsla(340,87%,75%,0.2) 0px, hsla(340,87%,75%,0.2) 30px,transparent 30px, transparent 60px),repeating-linear-gradient(90deg, hsla(340,87%,75%,0.2) 0px, hsla(340,87%,75%,0.2) 30px,transparent 30px, transparent 60px),linear-gradient(90deg, rgb(255,255,255),rgb(255,255,255)); */
+  }
+
+  .warrper{
+      width: 320px;
+      height: 320px;
+      /* width: 120px;
+      height: 120px; */
+      border-radius: 50%;
+      border: 10px solid white;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--bgColor);
+      transition: background-color 1s linear;
+      cursor:url("data:image/png;base64,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"),default;
+  }
+  .warrper:hover{
+      --bgColor:rgb(178, 222, 247);
+      --eyeHideTop:-20px;
+      --cloudLeft:100%;
+      --mouthRadius:0 0 10px 10px;
+  }
+  .sun{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      background-color: rgb(255, 229, 142);
+      border:7px solid rgb(253, 215, 91);
+      border-radius: 50%;
+      left: 55%;
+      top: 14%;
+      box-shadow: 0 0 6px rgb(255, 241, 48);
+  }
+
+  .cloud{
+      width: 100px;
+      height: 36px;
+      background-color: white;
+      position: absolute;
+      transition: left .6s linear;
+      left: var(--cloudLeft);
+      top: 23%;
+      border-radius: 36px;
+      animation: bouncy 2s ease-in-out infinite;
+  }
+  .cloud::before{
+    content: '';
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: -23px;
+    left: 18px;
+  }
+  .cloud::after{
+    content: '';
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    left: 56px;
+  }
+  @keyframes bouncy {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+          transform: scale(1.05);
+      }
+      100% {
+          transform: scale(1);
+      }
+  }
+  .cat{
+      width: 180px;
+      height: 160px;
+      background-color: rgb(252, 180, 125);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -90px;
+      animation: wait 2s ease-in-out infinite;
+  }
+  .cat::before{
+    content: '';
+    display: block;
+    border-style: solid;
+    border-width: 20px 30px;
+    position: absolute;
+    top: -30px;
+    left: 0;
+    border-color: transparent transparent rgb(252, 180, 125) rgb(252, 180, 125);
+  }
+  .cat::after{
+    content: '';
+    display: block;
+    border-style: solid;
+    border-width: 20px 30px;
+    position: absolute;
+    top: -30px;
+    right: 0;
+    border-color: transparent rgb(252, 180, 125) rgb(252, 180, 125) transparent;
+  }
+  .cat .eye{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    background:white;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .cat .eye .eye-hide{
+    height: 20px;
+    position: absolute;
+    top: var(--eyeHideTop);
+    left: -2px;
+    right:-2px;
+    background-color: rgb(252, 180, 125);
+    transition: top .5s ease-in-out;
+    z-index: 2;
+  }
+  .cat .eye::before{
+    content: "";
+    height: 36px;
+    width: 36px;
+    background-color:black;
+    border-radius: 50%;
+  }
+  .cat .eye::after{
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    top: 0px; 
+  }
+  .cat .eye.left{
+    left: 24px;
+  }
+  .cat .eye.right{
+    right: 24px;
+  }
+  .cat .nose{
+    width: 0;
+    height: 0;
+    border-top: 7px solid rgb(248, 226, 226);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    left: 50%;
+    margin-left: -7px;
+    top: 70px;
+  }
+  .cat .mouth{
+    width: 26px;
+    height: 20px;
+    background-color: rgb(255, 217, 217);
+    position: absolute;
+    top: 85px;
+    left: 50%;
+    margin-left: -13px;
+    border-radius: var(--mouthRadius);
+    transition: border-radius .2s linear;
+    overflow: hidden;
+  }
+  .cat .mouth::before{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    border-top: 7px solid white;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    left: 5px;
+  }
+  .cat .mouth::after{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    border-top: 7px solid white;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    right: 5px;
+  }
+
+  @keyframes wait{
+      0% {
+        bottom: -20px;
+      }
+      50% {
+        bottom: -25px;
+      }
+      100% {
+        bottom: -20px;
+      }
+  }
+</style>
+  
+</head>
+
+<body style="overflow-y: hidden;overflow-x: auto;">
+  <svg id="custom-svg" class="svg-bg" height="60" width="100%">
+    <polyline id="custom-polyline" style="fill:none;stroke:rgb(34, 34, 34);stroke-width:.5" points=""></polyline>
+  </svg>
+  <main>
+    <div class="inner">
+      当你徘徊在你想得到跟已经得到之间时 有很大可能你将会都失去
+    </div>
+  </main>
+
+  <a style="position: absolute;top:0;width: 100%;text-align: center;" href="./live2dw/live2dw.html">
+    live2dw
+  </a>
+  <a style="position: absolute;top:30px;width: 100%;text-align: center;" href="./bm/index.html">
+    黑夜
+  </a>
+  <div style="position: absolute;top:60px;width: 100%;text-align: center;" >
+      <a href="#" onclick="startConfetti()">
+        🎆
+      </a>
+      <a style="margin-left: 40px;" href="#" onclick="startSnow()">
+        ❄️
+      </a>
+  </div>
+
+
+  <!-- cat -->
+  <div id="cat-app">
+    <div class="warrper">
+      <div class="sun">
+      </div>
+      <div class="cloud">
+      </div>
+      <div class="cat">
+        <div class="eye left">
+          <div class="eye-hide">
+          </div>
+        </div>
+        <div class="eye right">
+          <div class="eye-hide">
+          </div>
+        </div>
+        <div class="nose">
+        </div>
+        <div class="mouth">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--动画人物-->
+  <script src="./live2dw/live2dw/lib/L2Dwidget.min.js"></script>
+  <script>
+    L2Dwidget.init({
+      "pluginRootPath": "live2dw/",
+      "pluginJsPath": "lib/",
+      "pluginModelPath": "assets/",
+      "tagMode": true,
+      "debug": "fasle",
+      // "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "./live2dw/assets/assets/haru01.model.json"},
+      "model": {"scale": 0.5, "hHeadPos": 0.5, "vHeadPos": 0.618, "jsonPath": "https://github.com/tiameg/tiameg.github.io/blob/master/live2dw/live2dw/assets/assets/haru01.model.json"},
+      "display": {"superSample": 2, "width": 100, "height": 200, "position": "left", "vOffset": 0, "hOffset": 25},
+      "mobile": {"show": true, "scale": 0.3, "motion": true},
+      "react": {"opacityDefault": 0.7, "opacityOnHover": 0.2},
+      "log": false
+    });
+  </script>
+</body>
+<!-- 彩弹效果 -->
+<script src="./javascripts/confetti.js"></script>
+<script>
+    var myCanvas = document.createElement('canvas');
+    myCanvas.setAttribute('id', 'confetti-canvas');
+    document.body.appendChild(myCanvas);
+
+    var myConfetti = confetti.create(myCanvas, {
+        resize: true,
+        useWorker: true
+    });
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    document.body.addEventListener('click', function(e) {
+        // myConfetti.start(e.clientX, e.clientY);
+        console.log(e.clientX, e.clientY);
+        myConfetti({
+            angle: randomInRange(55, 125),
+            spread: randomInRange(50, 70),
+            particleCount: randomInRange(50, 100),
+            origin: { 
+                y: 0.6
+            }
+        });
+    });
+
+    function startConfetti() {
+        var duration = 15 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+        }
+
+        var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            var particleCount = 50 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
+    function startSnow() {
+        var duration = 15 * 1000;
+        var animationEnd = Date.now() + duration;
+        var skew = 1;
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        (function frame() {
+            var timeLeft = animationEnd - Date.now();
+            var ticks = Math.max(200, 500 * (timeLeft / duration));
+            skew = Math.max(0.8, skew - 0.001);
+
+            myConfetti({
+                particleCount: 1,
+                startVelocity: 0,
+                ticks: ticks,
+                origin: {
+                x: Math.random(),
+                // since particles fall down, skew start toward the top
+                y: (Math.random() * skew) - 0.2
+                },
+                colors: ['#ffffff'],
+                shapes: ['circle'],
+                gravity: randomInRange(0.4, 0.6),
+                scalar: randomInRange(0.4, 1),
+                drift: randomInRange(-0.4, 0.4)
+            });
+
+            if (timeLeft > 0) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+</script>
+<!--鼠标效果JS-->
+<script src="./javascripts/mouse/test.js"></script>
+<script>
+  var cs=document.getElementById('custom-svg');
+  var cp=document.getElementById('custom-polyline');
+  var w=window.innerWidth;
+  var arr=[0];
+
+  function creatPolyline(n){
+    var i=0, k=0, point=null;
+    while(k<n-2){
+      arr.push(~~(Math.random()*w));
+      k++;
+    }
+    arr.sort((a, b)=> a - b);
+    arr.push(w);
+    while(i<n){
+      point=cs.createSVGPoint();
+      point.x=arr[i];
+      point.y=~~(Math.random()*60);
+      cp.points.appendItem(point);
+      i++;
+    }
+
+  }
+  window.onresize = function(event) {
+    cp.points.clear();
+    arr=[0];
+    w=window.innerWidth;
+    creatPolyline(20);
+  };
+  creatPolyline(20);
+
+</script>
+<!--波浪效果JS-->
+<script type="text/javascript" src="./javascripts/three/three.min.js"></script>
+<script>
+  var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
+
+  var container;
+  var camera, scene, renderer;
+
+  var particles, particle, count = 0;
+
+  var mouseX = 0, mouseY = -500;
+
+  var windowHalfX = window.innerWidth / 2;
+  var windowHalfY = window.innerHeight / 2;
+
+  init();
+  animate();
+
+  function init() {
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+
+    particles = new Array();
+
+    var PI2 = Math.PI * 2;
+    var material = new THREE.ParticleCanvasMaterial({
+
+      color: 0x999999,
+      program: function (context) {
+
+        context.beginPath();
+        context.arc(0, 0, 1, 0, PI2, true);
+        context.fill();
+
+      }
+
+    });
+
+    var i = 0;
+
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+
+        particle = particles[i++] = new THREE.Particle(material);
+        particle.position.x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2);
+        particle.position.z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2);
+        scene.add(particle);
+
+      }
+
+    }
+
+    renderer = new THREE.CanvasRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('touchstart', onDocumentTouchStart, false);
+    document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+    //
+
+    window.addEventListener('resize', onWindowResize, false);
+
+  }
+
+  function onWindowResize() {
+
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+  }
+
+  //
+
+  function onDocumentMouseMove(event) {
+
+
+    mouseY = -500;
+
+  }
+
+  function onDocumentTouchStart(event) {
+
+    if (event.touches.length === 1) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[0].pageX - windowHalfX;
+      mouseY = event.touches[0].pageY - windowHalfY;
+
+    }
+
+  }
+
+  function onDocumentTouchMove(event) {
+
+    if (event.touches.length === 1) {
+
+      event.preventDefault();
+
+      mouseX = event.touches[0].pageX - windowHalfX;
+      mouseY = event.touches[0].pageY - windowHalfY;
+
+    }
+
+  }
+
+  //
+
+  function animate() {
+
+    requestAnimationFrame(animate);
+
+    render();
+
+
+  }
+
+  function render() {
+
+    camera.position.x += (mouseX - camera.position.x) * .05;
+    camera.position.y += (-mouseY - camera.position.y) * .05;
+    camera.lookAt(scene.position);
+
+    var i = 0;
+
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+
+        particle = particles[i++];
+        particle.position.y = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+        particle.scale.x = particle.scale.y = (Math.sin((ix + count) * 0.3) + 1) * 2 + (Math.sin((iy + count) * 0.5) + 1) * 2;
+
+      }
+
+    }
+
+    renderer.render(scene, camera);
+
+    count += 0.1;
+
+  }
+</script>
+
+</html>
